@@ -1,0 +1,59 @@
+Help Hannah's Horse 2.0
+-----------------------
+
+August 2020
+
+
+Installation instructions
+-------------------------
+
+Help Hannah's Horse uses the GNU Autotools framework for compilation and installation.
+
+To compile the game type:
+
+./configure
+
+which will check all dependencies, including a suitable c++ compiler, are installed.
+If this completes successfully, type:
+
+make
+
+to build the game. To run locally, type:
+
+./hannah
+
+or to install globally type:
+
+make install
+
+To change the default install location, pass the --prefix parameter to the ./configure step:
+
+./configure --prefix=~/usr
+
+to install, for example, to a usr folder under your home directory.
+
+If you've chosen to install globally, you can now delete the whole source directory.
+
+There are a number of command-line parameters that can be used and these can be displayed by running:
+
+hannah --help
+
+
+Prerequisites
+-------------
+
+You will need SDL (>=2.0.5), SDL_image, SDL_mixer and SDL_ttf installed and their appropriate devel packages
+and you will also need g++ (part of the Gnu Compiler Collection).
+
+
+Windows
+-------
+
+A 64bit Windows installer is available from the project homepage, but Makefile.Windows is included which should
+(possibly with a bit of coaxing) build on Mingw_64 for Windows.
+
+
+Contact
+-------
+
+Send ideas, bug reports, complaints or donations via paypal(!) to yottskry _at_ gmx _dot_ net

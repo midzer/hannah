@@ -1,0 +1,62 @@
+
+DATA_INSTALL_DIR=.
+SCORE_DIR=.
+
+SDLBASE=c:\Lib\SDL2-2.0.12\x86_64-w64-mingw32
+IMGBASE=c:\Lib\SDL2_image-2.0.5\x86_64-w64-mingw32
+MIXBASE=c:\Lib\SDL2_mixer-2.0.4\x86_64-w64-mingw32
+TTFBASE=c:\Lib\SDL2_ttf-2.0.15\x86_64-w64-mingw32
+
+LIBS = -L. -L$(SDLBASE)/lib -L$(IMGBASE)/lib -L$(MIXBASE)/lib -L$(TTFBASE)/lib -lmingw32 -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2main -lSDL2 -mwindows -Dmain=SDL_main -Wl,-u,_WinMain@16
+CFLAGS = -I$(SDLBASE)/include/SDL2 -I$(IMGBASE)/include/SDL2 -I$(MIXBASE)/include/SDL2 -I$(TTFBASE)/include/SDL2 -I/usr/x86_64-w64-mingw32/include -D_GNU_SOURCE=1 -DDATA_INSTALL_DIR=\"${DATA_INSTALL_DIR}\" -DSCORE_DIR=\"${SCORE_DIR}\"
+
+CC = "C:\Program Files\mingw-w64\x86_64-7.3.0-posix-seh-rt_v5-rev0\mingw64\bin\g++.exe" -march=x86-64 -static-libgcc -static-libstdc++ #-g -ggdb3
+OUT = hannah.exe
+OBJS = Global.o ScoreLib.o Menu.o Bonus.o Level.o Animation.o AnimationFactory.o Sprite.o Player.o Ghost.o Ghost1.o Ghost2.o Ghost3.o Food.o hannah.res
+
+all:	$(OBJS) main
+
+main:	pacman.cc
+	$(CC) $(OBJS) $(CFLAGS) pacman.cc $(LIBS) -o $(OUT)
+
+Global.o:	Global.cc
+	$(CC) $(CFLAGS) -c -o Global.o Global.cc
+
+ScoreLib.o:	ScoreLib.cc
+	$(CC) $(CFLAGS) -c -o ScoreLib.o ScoreLib.cc
+
+Menu.o: Menu.cc
+	$(CC) $(CFLAGS) -c -o Menu.o Menu.cc
+
+AnimationFactory.o:	Animation.o
+	$(CC) $(CFLAGS) -c -o AnimationFactory.o AnimationFactory.cc
+
+Animation.o:	Animation.cc
+	$(CC) $(CFLAGS) -c -o Animation.o Animation.cc
+
+Bonus.o:	Bonus.cc
+	$(CC) $(CFLAGS) -c -o Bonus.o Bonus.cc
+
+Sprite.o:	Sprite.cc
+	$(CC) $(CFLAGS) -c -o Sprite.o Sprite.cc
+
+Player.o:	Player.cc
+	$(CC) $(CFLAGS) -c -o Player.o Player.cc
+
+Ghost.o:	Ghost.cc
+	$(CC) $(CFLAGS) -c -o Ghost.o Ghost.cc
+
+Ghost1.o:	Ghost1.cc Ghost.o
+	$(CC) $(CFLAGS) -c -o Ghost1.o Ghost1.cc
+
+Ghost2.o:	Ghost2.cc Ghost.o
+	$(CC) $(CFLAGS) -c -o Ghost2.o Ghost2.cc
+
+Ghost3.o: Ghost2.cc Ghost.o
+	$(CC) $(CFLAGS) -c -o Ghost3.o Ghost3.cc
+
+Food.o:	Ghost2.cc Ghost.o
+	$(CC) $(CFLAGS) -c -o Food.o Food.cc
+
+Level.o:	Level.cc
+	$(CC) $(CFLAGS) -c -o Level.o Level.cc

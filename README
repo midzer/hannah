@@ -1,0 +1,68 @@
+Help Hannah's Horse - Version 2.0.0
+(c) Copyright 2020 Steve Branley
+Released under the GPL Version 3. Please read gpl.txt for details.
+-------------------
+
+Release Notes 2.0.0
+-----------------------
+
+Hannah 2.0.0 is the first release linked against SDL2.0. The last version that can compile against SDL1.2 is Hannah version 1.2.
+
+
+Features of 2.0.0
+-----------------------
+* Compiles against SDL 2.0
+* New in-game menu system
+* Joystick support (a little experimental)
+* Three difficulty modes, include "Insane": no powerpills, faster ghosts and a "fog of war" over most of the screen
+* A new power down (the robber - he makes you drop your coins)
+* Further code improvements (even more to come!)
+* Autotools support for POSIX-system compilation (sorry Windows users)
+
+Features of 1.2.0
+-----------------------
+
+* New Windows Installer
+* New music! Was never sure of the copyright status of the old music, as I just found it online, so 
+   the new music is written entirely by me and thus copyright me!
+* Updated graphics - the horrible purple and handwritten fonts have gone, replaced by
+   8-bit style pastel shades and ModeSeven.
+* New animations for Hannah!
+* Extra lives! I can't believe I made the game this tough and didn't have any extra lives,
+   so you now get a new life every 5000 points. This boundary might change.
+* Ghosts move away from Hannah when she's eaten a powerpill (well, not the red one, he's random)
+* Fixed niggly bugs like Hannah being momentarily visible after dying
+* Game can now be run in Linux without installation
+* Removed lots and lots of commented code from the source files.
+
+Installation (POSIX)
+----------------------
+
+./configure
+
+make
+
+make install
+
+For more details please see INSTALL
+
+
+Aim
+---
+
+If you've ever played Pacman, you'll know what to do here. Collect the coins and avoid the ghosts. To make things
+more interesting there are also moving carrots that need to be collected (sentient vegetables - scary!) and powerups 
+and downs to collect or avoid. There are also a smattering of obstacles.
+
+These are:
+
+* Red and White - only the ghosts can cross them
+* Blue and White - only hannah can cross them
+* Wooden gates - both hannah and the ghosts can cross, but only passing from below to above
+* Cross poles - collect the red key to open them (cross poles with a key hole?)
+
+Running with -f (/f on Windows) will run the game full screen.
+
+There are currently 15 levels. It'll probably crash after that.
+
+I would LOVE some feedback (good, bad, bugs...) to yottskry_at_gmx_dot_net (you can figure that out I'm sure)

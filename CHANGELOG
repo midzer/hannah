@@ -1,0 +1,4 @@
+Changes from 1.2 to 2.0
+
+*   Migration to SDL 2.0 from 1.2 
+*   Bonuses now appear in random locations, rather than always in the centre

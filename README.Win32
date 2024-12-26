@@ -1,0 +1,15 @@
+Compiling Hannah for Win32 using Linux
+
+1. Install mingw-w64 from the repositories (Mint)
+2. Download the various SDL libraries for MINGW32 Windows, version 1.2
+    * These will have .dll, .a and .a.dll files. Mingw links to the .a files
+3. In most cases, nothing will need to be built, but for SDL_gfx, edit the Makefile.mingw file:
+    * Change the path to the cross compiler (i686 version)
+    * Add SDL_gfxBlitFunc.o to the list of OBJS
+    * Change the path to the installed Windows SDL libs
+    * Build
+4. Change Makefile.Win32 for Hannah to point to the right library and include locations for SDL
+5. Build the resource file, if it hasn't already been done: i686-w64-mingw32-windres hannah.rc -O coff -o hannah.res
+6. Build Hannah
+7. Copy all shared .dll files (including FreeType, zlib, etc) into the correct folder
+8. Package up and enjoy!

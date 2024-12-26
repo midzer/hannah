@@ -1,0 +1,101 @@
+# Makefile for "Help Hannah's Horse"
+# This Makefile kindly contributed by Eero Tamminen (Thanks Eero!)
+
+# Install options
+#
+# For local install, comment the next line and uncomment the one after
+DATA_INSTALL_DIR=/usr/local/games/hannah
+#DATA_INSTALL_DIR=.
+
+# Where the binary goes (you might want /usr/bin instead)
+BIN_DIR=/usr/local/bin
+
+# Where the hiscore table is saved: user's home dir/.hannah
+#SCORE_DIR=${HOME}/.hannah
+#SCORE_DIR=.
+
+
+# compiler options
+CXX       = g++
+CPPFLAGS = $(shell sdl2-config --cflags) -DDATA_INSTALL_DIR=\"${DATA_INSTALL_DIR}\" #-DSCORE_DIR=\"${SCORE_DIR}\"
+CXXFLAGS   = -O2 -Wall -g -ggdb3
+LIBS     = $(shell sdl2-config --libs) -lSDL2_image -lSDL2_ttf -lSDL2_mixer 
+
+# target binary and directory name
+OUT = hhh
+# source and object files
+SRCS = $(wildcard *.cc)
+OBJS = $(patsubst %.cc, %.o, $(SRCS))
+
+# what to build
+$(OUT): $(OBJS)
+	$(CXX) $(CXXFLAGS) -o $(OUT) $(OBJS) $(LIBS)
+
+# how to compile source code to object files
+.cc.o:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+
+# automatic dependencies
+deps: $(SRCS)
+	gcc $(CPPFLAGS) -MM $^ > deps
+
+-include deps
+
+
+install: hhh	
+	install -m 0755 -s hhh $(BIN_DIR)
+	install -d -m 0755 $(DATA_INSTALL_DIR)/resources/hannah/default $(DATA_INSTALL_DIR)/resources/hannah/die $(DATA_INSTALL_DIR)/resources/hannah/invis $(DATA_INSTALL_DIR)/resources/red/flash $(DATA_INSTALL_DIR)/resources/red/default $(DATA_INSTALL_DIR)/resources/pink/flash $(DATA_INSTALL_DIR)/resources/pink/default $(DATA_INSTALL_DIR)/resources/blue/default $(DATA_INSTALL_DIR)/resources/blue/flash $(DATA_INSTALL_DIR)/resources/images  $(DATA_INSTALL_DIR)/resources/maps $(DATA_INSTALL_DIR)/resources/sounds $(DATA_INSTALL_DIR)/resources/carrot/default $(DATA_INSTALL_DIR)/resources/stop/default $(DATA_INSTALL_DIR)/resources/freeze/default $(DATA_INSTALL_DIR)/resources/invis/default $(DATA_INSTALL_DIR)/resources/invert/default 
+	install -m 0755 -D resources/hannah/default/* $(DATA_INSTALL_DIR)/resources/hannah/default
+	install -m 0755 resources/hannah/die/* $(DATA_INSTALL_DIR)/resources/hannah/die
+	install -m 0755 resources/hannah/invis/* $(DATA_INSTALL_DIR)/resources/hannah/invis
+	install -m 0755 resources/red/default/* $(DATA_INSTALL_DIR)/resources/red/default
+	install -m 0755 resources/red/flash/* $(DATA_INSTALL_DIR)/resources/red/flash
+	install -m 0755 resources/pink/default/* $(DATA_INSTALL_DIR)/resources/pink/default
+	install -m 0755 resources/pink/flash/* $(DATA_INSTALL_DIR)/resources/pink/flash
+	install -m 0755 resources/blue/default/* $(DATA_INSTALL_DIR)/resources/blue/default
+	install -m 0755 resources/blue/flash/* $(DATA_INSTALL_DIR)/resources/blue/flash
+	install -m 0755 resources/carrot/default/* $(DATA_INSTALL_DIR)/resources/carrot/default
+	install -m 0755 resources/freeze/default/* $(DATA_INSTALL_DIR)/resources/freeze/default
+	install -m 0755 resources/invis/default/* $(DATA_INSTALL_DIR)/resources/invis/default
+	install -m 0755 resources/invert/default/* $(DATA_INSTALL_DIR)/resources/invert/default
+	install -m 0755 resources/sounds/* $(DATA_INSTALL_DIR)/resources/sounds
+	install -m 0755 resources/images/* $(DATA_INSTALL_DIR)/resources/images
+	install -m 0755 resources/maps/* $(DATA_INSTALL_DIR)/resources/maps
+	install -m 0755 resources/*.ttf resources/*.ogg  $(DATA_INSTALL_DIR)/resources
+	#cp -p hiscore.dat $(SCORE_DIR)/
+
+
+# package name and what to exclude from it
+PKG_NAME = $(OUT)-$(shell date -I)
+EXCLUDE = --exclude CVS --exclude "*.bak"
+
+# rename source dir to pkg-dir, package, rename back
+package: veryclean
+	cd ..; \
+	mv $(OUT) $(PKG_NAME); \
+	tar -zcvf $(PKG_NAME).tar.gz $(EXCLUDE) $(PKG_NAME); \
+	mv $(PKG_NAME) $(OUT)
+
+
+# remove temporary files
+clean:
+	$(RM) *.o *~
+
+# remove also the built binary
+veryclean: clean
+	$(RM) $(OUT)
+
+# remove also sources
+megaclean: veryclean
+	$(RM) *.cc *.h
+
+uninstall:
+	rm -rf $(DATA_INSTALL_DIR) $(BIN_DIR)/hhh
+
+love:
+	@echo "Sorry, I'm not equipped for that"
+
+war:
+	@echo "Make love, not war!"
+
+.PHONY:	install package clean veryclean megaclean love war uninstall
