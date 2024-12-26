@@ -94,9 +94,9 @@ void Global::drawTextAt(SDL_Renderer* renderer, const std::string text, int x, i
 	SDL_Surface* textsurface;
     TTF_Font* fon;
     
-    try{
+    if(fonts.count(size) > 0) {
         fon = fonts.at(size);
-    } catch (exception e){
+    } else {
         fon = TTF_OpenFont(Global::getPath("font.ttf").c_str(), size);
         fonts[size] = fon;
     }

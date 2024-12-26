@@ -18,7 +18,7 @@
 #include <iostream>
 #include <cstdio>
 #include <sstream>
-#ifndef WIN32
+#ifdef WIN32
     #include <argp.h>
 #endif
 #include "Player.h"
@@ -88,7 +88,7 @@ bool nojoy = false;
 int pillsleft = 0;
 bool ted = false; // Invincibility -ted
 
-bool Global::local = false;
+bool Global::local = true;
 std::vector<scoreentry> ScoreLib::hiscore;
 std::map<int, TTF_Font*> Global::fonts;
 Uint32 Global::HannahEventType;
@@ -1318,7 +1318,7 @@ int main(int argc, char **argv){
     
     // Because Windows is a steaming pile of shite, I don't
     // have the benefit of the lovely argp options parsing stuff
-    #ifndef WIN32
+    #ifdef WIN32
     
         struct argp_option options[] = { 
             { "fullscreen", 'f', 0, 0, "Run game full screen"}, 
